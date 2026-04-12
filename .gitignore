@@ -1,5 +1,18 @@
+# Build results
 bin/
 obj/
-*.user
-*.suo
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# Visual Studio
 .vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# NuGet
+packages/
+*.nupkg
