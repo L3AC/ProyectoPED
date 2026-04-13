@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProyectoPED"
+        xmlns:views="clr-namespace:ProyectoPED.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="TaskUni - Sistema de Gestión de Tareas" 
+        Height="700" Width="1100"
+        WindowStartupLocation="CenterScreen"
+        Background="#F5F7FA">
     <Grid>
-
+        <views:Dashboard x:Name="DashboardView"/>
     </Grid>
 </Window>
