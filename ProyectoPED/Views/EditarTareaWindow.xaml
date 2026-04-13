@@ -1,0 +1,97 @@
+<Window x:Class="ProyectoPED.Views.EditarTareaWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Title="Editar Tarea" 
+             Height="580" Width="500"
+             WindowStartupLocation="CenterOwner"
+             ShowInTaskbar="False"
+             ResizeMode="NoResize"
+             Background="#F3F4F6">
+
+    <Grid>
+        <Border Background="White" CornerRadius="12" Margin="20">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="3" BlurRadius="15" Opacity="0.15" Color="#000000"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <Border Grid.Row="0" Background="#F59E0B" CornerRadius="12,12,0,0" Padding="25,20">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Pencil" Width="28" Height="28" Foreground="White" Margin="0,0,12,0"/>
+                        <TextBlock Text="Editar Tarea" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Formulario -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="25,20">
+                    <StackPanel>
+                        <!-- ID (solo lectura) -->
+                        <TextBlock Text="ID de la tarea" FontSize="13" FontWeight="Medium" Foreground="#374151" Margin="0,0,0,8"/>
+                        <TextBox x:Name="TxtId" Padding="12,10" FontSize="14" IsReadOnly="True"
+                                 Background="#E5E7EB"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+
+                        <!-- Título -->
+                        <TextBlock Text="Título de la tarea" FontSize="13" FontWeight="Medium" Foreground="#374151" Margin="0,20,0,8"/>
+                        <TextBox x:Name="TxtTitulo" Padding="12,10" FontSize="14"
+                                 materialDesign:HintAssist.Hint="Ej: Proyecto Final de Base de Datos"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+
+                        <!-- Descripción -->
+                        <TextBlock Text="Descripción" FontSize="13" FontWeight="Medium" Foreground="#374151" Margin="0,20,0,8"/>
+                        <TextBox x:Name="TxtDescripcion" Padding="12,10" FontSize="14" Height="100"
+                                 TextWrapping="Wrap" AcceptsReturn="True" VerticalContentAlignment="Top"
+                                 materialDesign:HintAssist.Hint="Describe los detalles de la tarea..."
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+
+                        <!-- Fecha Límite -->
+                        <TextBlock Text="Fecha Límite" FontSize="13" FontWeight="Medium" Foreground="#374151" Margin="0,20,0,8"/>
+                        <DatePicker x:Name="DpFechaLimite" Padding="12,10" FontSize="14"
+                                    materialDesign:HintAssist.Hint="Seleccionar fecha"
+                                    Style="{StaticResource MaterialDesignOutlinedDatePicker}"/>
+
+                        <!-- Prioridad -->
+                        <TextBlock Text="Prioridad" FontSize="13" FontWeight="Medium" Foreground="#374151" Margin="0,20,0,8"/>
+                        <ComboBox x:Name="CmbPrioridad" Padding="12,10" FontSize="14"
+                                  materialDesign:HintAssist.Hint="Seleccionar prioridad"
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}">
+                            <ComboBoxItem Content="Alta"/>
+                            <ComboBoxItem Content="Media"/>
+                            <ComboBoxItem Content="Baja"/>
+                        </ComboBox>
+
+                        <!-- Estado -->
+                        <TextBlock Text="Estado" FontSize="13" FontWeight="Medium" Foreground="#374151" Margin="0,20,0,8"/>
+                        <ComboBox x:Name="CmbEstado" Padding="12,10" FontSize="14"
+                                  materialDesign:HintAssist.Hint="Seleccionar estado"
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}">
+                            <ComboBoxItem Content="Pendiente"/>
+                            <ComboBoxItem Content="Completada"/>
+                            <ComboBoxItem Content="Vencida"/>
+                        </ComboBox>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Botones -->
+                <Border Grid.Row="2" Background="#F9FAFB" CornerRadius="0,0,12,12" Padding="25,15">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Cancelar" Padding="20,10" Margin="0,0,10,0"
+                                Style="{StaticResource MaterialDesignOutlinedButton}"
+                                Click="BtnCancelar_Click"/>
+                        <Button Content="Guardar Cambios" Padding="20,10"
+                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                Background="#F59E0B"
+                                Click="BtnGuardar_Click"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

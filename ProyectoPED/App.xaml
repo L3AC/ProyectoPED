@@ -3,8 +3,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ProyectoPED"
              xmlns:converters="clr-namespace:ProyectoPED.Converters"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Teal"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign2.Defaults.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+            <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility"/>
+            
+            <!-- Colores personalizados según spec -->
+            <SolidColorBrush x:Key="HeaderBackgroundBrush" Color="#2C2C5F"/>
+            <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="#1E1E3F"/>
+            <SolidColorBrush x:Key="SidebarHoverBrush" Color="#3D3D6B"/>
+            <SolidColorBrush x:Key="SidebarActiveBrush" Color="#4D4D8B"/>
+            
+            <!-- Colores para días restantes -->
+            <SolidColorBrush x:Key="DiasRojoBrush" Color="#EF4444"/>
+            <SolidColorBrush x:Key="DiasNaranjaBrush" Color="#F97316"/>
+            <SolidColorBrush x:Key="DiasVerdeBrush" Color="#22C55E"/>
+            
+            <!-- Colores para prioridad -->
+            <SolidColorBrush x:Key="PrioridadAltaBrush" Color="#FEE2E2"/>
+            <SolidColorBrush x:Key="PrioridadMediaBrush" Color="#FEF3C7"/>
+            <SolidColorBrush x:Key="PrioridadBajaBrush" Color="#D1FAE5"/>
+            
+            <!-- Colores para estado -->
+            <SolidColorBrush x:Key="EstadoCompletadoBrush" Color="#E5E7EB"/>
+            <SolidColorBrush x:Key="EstadoPendienteBrush" Color="#DBEAFE"/>
+            <SolidColorBrush x:Key="EstadoVencidoBrush" Color="#FEE2E2"/>
+            
+            <!-- Textos de colores -->
+            <SolidColorBrush x:Key="TextoPrioridadAltaBrush" Color="#DC2626"/>
+            <SolidColorBrush x:Key="TextoPrioridadMediaBrush" Color="#D97706"/>
+            <SolidColorBrush x:Key="TextoPrioridadBajaBrush" Color="#059669"/>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
