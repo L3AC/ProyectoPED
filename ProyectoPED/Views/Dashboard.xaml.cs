@@ -1,21 +1,38 @@
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using ProyectoPED.Repositories;
+using ProyectoPED.Models;
+using System.Collections.ObjectModel;
 
 namespace ProyectoPED.Views
 {
     public partial class Dashboard : UserControl
     {
+        private ObservableCollection<Tarea> listaTareas = null!;
+        private int usuarioId = 1; //SE COLOCA 1 COMO USUARIO DEFAULT 
+
         public Dashboard()
         {
             InitializeComponent();
-            TxtFechaActual.Text = $"Lunes {DateTime.Now:dd} de {DateTime.Now:MMMM} de {DateTime.Now:yyyy}";
+            TxtFechaActual.Text = $"{DateTime.Now:dd} de {DateTime.Now:MMMM} de {DateTime.Now:yyyy}";
+            CargarTareas();
+        }
+
+        private void CargarTareas()
+        {
+            listaTareas = TareaRepository.GetTareasPorUsuario(usuarioId);
+            DgTareas.ItemsSource = listaTareas;
         }
 
         private void BtnNuevaTarea_Click(object sender, RoutedEventArgs e)
         {
             var modal = new NuevaTareaWindow();
             modal.Owner = Window.GetWindow(this);
-            modal.ShowDialog();
+            if (modal.ShowDialog() == true)
+            {
+                CargarTareas();
+            }
         }
 
         private void BtnSimular_Click(object sender, RoutedEventArgs e)
@@ -32,7 +49,19 @@ namespace ProyectoPED.Views
 
         private void BtnDeshacer_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Deshacer última acción", "Deshacer");
+            if (sender is Button btn && btn.Tag is int tareaId)
+            {
+                var result = MessageBox.Show($"¿Deshacer la tarea ID {tareaId}? Volverá a estado Pendiente.", "Confirmar", 
+                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    if (TareaRepository.DeshacerTarea(tareaId))
+                    {
+                        MessageBox.Show("Tarea marcada como Pendiente", "Éxito");
+                        CargarTareas();
+                    }
+                }
+            }
         }
 
         private void BtnCerrarSesion_Click(object sender, RoutedEventArgs e)
@@ -47,26 +76,36 @@ namespace ProyectoPED.Views
 
         private void BtnCompletar_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button btn && btn.Tag != null)
+            if (sender is Button btn && btn.Tag is int tareaId)
             {
-                var result = MessageBox.Show($"¿Completar la tarea ID {btn.Tag}?", "Confirmar", 
+                var result = MessageBox.Show($"¿Completar la tarea ID {tareaId}?", "Confirmar", 
                     MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show($"Tarea {btn.Tag} completada", "Éxito");
+                    if (TareaRepository.CompletarTarea(tareaId))
+                    {
+                        MessageBox.Show("Tarea completada", "Éxito");
+                        CargarTareas();
+                    }
                 }
             }
         }
 
         private void BtnEditar_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button btn && btn.Tag != null)
+            if (sender is Button btn && btn.Tag is int tareaId)
             {
-                var modal = new EditarTareaWindow();
-                modal.Owner = Window.GetWindow(this);
-                modal.TareaId = (int)btn.Tag;
-                modal.CargarTarea((int)btn.Tag, "Tarea de ejemplo", "Descripción de ejemplo", "Media", "Pendiente");
-                modal.ShowDialog();
+                var tarea = listaTareas.FirstOrDefault(t => t.Id == tareaId);
+                if (tarea != null)
+                {
+                    var modal = new EditarTareaWindow();
+                    modal.Owner = Window.GetWindow(this);
+                    modal.CargarTarea(tarea.Id, tarea.Titulo, tarea.Descripcion ?? "", tarea.Prioridad, tarea.Estado);
+                    if (modal.ShowDialog() == true)
+                    {
+                        CargarTareas();
+                    }
+                }
             }
         }
 

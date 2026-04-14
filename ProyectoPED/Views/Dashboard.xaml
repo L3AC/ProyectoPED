@@ -77,6 +77,56 @@
             </Style.Triggers>
         </Style>
 
+        <Style x:Key="EditButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F3F4F6"/>
+            <Setter Property="Foreground" Value="#374151"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#E5E7EB"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="UndoButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#9CA3AF"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#6B7280"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="SuccessButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#22C55E"/>
             <Setter Property="Foreground" Value="White"/>
@@ -241,7 +291,7 @@
                 <StackPanel Grid.Row="0" Margin="0,0,0,20">
                     <TextBlock Text="Panel de Tareas" FontSize="28" FontWeight="Bold" 
                                Foreground="#1F2937"/>
-                    <TextBlock x:Name="TxtFechaActual" Text="Lunes 14 de abril de 2025" 
+                    <TextBlock x:Name="TxtFechaActual" Text="00 / 00 / 0000" 
                                FontSize="14" Foreground="#6B7280" Margin="0,5,0,0"/>
                 </StackPanel>
 
@@ -258,7 +308,12 @@
                               SelectionMode="Single" SelectionUnit="FullRow"
                               HorizontalScrollBarVisibility="Auto"
                               VerticalScrollBarVisibility="Auto"
-                              RowHeight="54">
+                              RowHeight="54"
+                              MinRowHeight="54"
+                              EnableColumnVirtualization="True"
+                              EnableRowVirtualization="True"
+                              VirtualizingPanel.IsVirtualizing="True"
+                              VirtualizingPanel.VirtualizationMode="Recycling">
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="Background" Value="#F9FAFB"/>
@@ -301,7 +356,7 @@
                         </DataGrid.CellStyle>
                         
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60">
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="FontWeight" Value="SemiBold"/>
@@ -310,17 +365,18 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             
-                            <DataGridTextColumn Header="Título" Binding="{Binding Titulo}" Width="*">
+                            <DataGridTextColumn Header="Título" Binding="{Binding Titulo}" Width="2*">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="FontWeight" Value="Medium"/>
                                         <Setter Property="Foreground" Value="#1F2937"/>
                                         <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             
-                            <DataGridTextColumn Header="Fecha límite" Binding="{Binding FechaLimite, StringFormat='{}{0:dd/MM/yyyy}'}" Width="120">
+                            <DataGridTextColumn Header="Fecha límite" Binding="{Binding FechaLimite, StringFormat='{}{0:dd/MM/yyyy}'}" Width="100">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="#6B7280"/>
@@ -329,13 +385,13 @@
                             </DataGridTextColumn>
                             
                             <!-- Días restantes con colores condicionales -->
-                            <DataGridTemplateColumn Header="Días rest." Width="130">
+                            <DataGridTemplateColumn Header="Días rest." Width="100">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Border CornerRadius="6" Padding="10,5" HorizontalAlignment="Center"
+                                        <Border CornerRadius="6" Padding="8,4" HorizontalAlignment="Center"
                                                 Background="{Binding ColorDiasRestantes}">
                                             <TextBlock Text="{Binding DiasRestantesTexto}" 
-                                                       FontWeight="SemiBold" FontSize="12"
+                                                       FontWeight="SemiBold" FontSize="11"
                                                        Foreground="White"/>
                                         </Border>
                                     </DataTemplate>
@@ -343,13 +399,13 @@
                             </DataGridTemplateColumn>
                             
                             <!-- Prioridad con colores condicionales -->
-                            <DataGridTemplateColumn Header="Prioridad" Width="120">
+                            <DataGridTemplateColumn Header="Prioridad" Width="100">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Border CornerRadius="6" Padding="10,5" HorizontalAlignment="Left"
+                                        <Border CornerRadius="6" Padding="8,4" HorizontalAlignment="Center"
                                                 Background="{Binding ColorPrioridad}">
                                             <TextBlock Text="{Binding Prioridad}" 
-                                                       FontWeight="SemiBold" FontSize="12"
+                                                       FontWeight="SemiBold" FontSize="11"
                                                        Foreground="{Binding ColorTextoPrioridad}"/>
                                         </Border>
                                     </DataTemplate>
@@ -357,50 +413,72 @@
                             </DataGridTemplateColumn>
                             
                             <!-- Estado -->
-                            <DataGridTemplateColumn Header="Estado" Width="120">
+                            <DataGridTemplateColumn Header="Estado" Width="100">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Border CornerRadius="6" Padding="10,5" HorizontalAlignment="Left"
+                                        <Border CornerRadius="6" Padding="8,4" HorizontalAlignment="Center"
                                                 Background="{Binding ColorEstado}">
                                             <TextBlock Text="{Binding Estado}" 
-                                                       FontWeight="SemiBold" FontSize="12"
+                                                       FontWeight="SemiBold" FontSize="11"
                                                        Foreground="White"/>
                                         </Border>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             
-                            <!-- Acciones -->
-                            <DataGridTemplateColumn Header="Acciones" Width="220">
+                            <!-- Acciones con botones condicionales según Estado -->
+                            <DataGridTemplateColumn Header="Acciones" Width="240">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <!-- Botón Completar -->
-                                            <Button Style="{StaticResource SuccessButtonStyle}"
-                                                    Click="BtnCompletar_Click" Tag="{Binding Id}"
-                                                    Margin="0,0,6,0">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <materialDesign:PackIcon Kind="Check" Width="14" Height="14" Margin="0,0,4,0"/>
-                                                    <TextBlock Text="Completar"/>
-                                                </StackPanel>
-                                            </Button>
-                                            <Button Style="{StaticResource SecondaryButtonStyle}"
-                                                    Click="BtnDeshacer_Click" Tag="{Binding Id}"
-                                                    Margin="0,0,6,0">
+                                        <Grid>
+                                            <!-- Botones para estado Pendiente -->
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <StackPanel.Style>
+                                                    <Style TargetType="StackPanel">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Estado}" Value="Completada">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </StackPanel.Style>
+                                                <Button Style="{StaticResource SuccessButtonStyle}"
+                                                        Click="BtnCompletar_Click" Tag="{Binding Id}"
+                                                        Margin="0,0,8,0" MinWidth="90">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon Kind="Check" Width="14" Height="14" Margin="0,0,4,0"/>
+                                                        <TextBlock Text="Completar"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Style="{StaticResource EditButtonStyle}"
+                                                        Click="BtnEditar_Click" Tag="{Binding Id}"
+                                                        MinWidth="80">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon Kind="Pencil" Width="14" Height="14" Margin="0,0,4,0"/>
+                                                        <TextBlock Text="Editar"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                            <!-- Botón Deshacer para estado Completada -->
+                                            <Button Click="BtnDeshacer_Click" Tag="{Binding Id}"
+                                                    HorizontalAlignment="Center" MinWidth="90">
+                                                <Button.Style>
+                                                    <Style TargetType="Button" BasedOn="{StaticResource UndoButtonStyle}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Estado}" Value="Completada">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
                                                 <StackPanel Orientation="Horizontal">
                                                     <materialDesign:PackIcon Kind="Undo" Width="14" Height="14" Margin="0,0,4,0"/>
                                                     <TextBlock Text="Deshacer"/>
                                                 </StackPanel>
                                             </Button>
-                                            <!-- Botón Editar -->
-                                            <Button Style="{StaticResource AccentButtonStyle}"
-                                                    Click="BtnEditar_Click" Tag="{Binding Id}">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <materialDesign:PackIcon Kind="Pencil" Width="14" Height="14" Margin="0,0,4,0"/>
-                                                    <TextBlock Text="Editar"/>
-                                                </StackPanel>
-                                            </Button>
-                                        </StackPanel>
+                                        </Grid>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
