@@ -198,12 +198,7 @@
 
                 <!-- Logo TaskUni -->
                 <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="25,0,0,0">
-                    <Border Background="#ff751f" CornerRadius="10" Width="42" Height="42" Margin="0,0,14,0">
-                        <Grid>
-                            <materialDesign:PackIcon Kind="CheckboxMarkedCircle" Width="26" Height="26" Foreground="White" 
-                                                     HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Grid>
-                    </Border>
+                    <Image Source="/logo.png" Width="42" Height="42" Margin="0,0,14,0"/>
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock Text="TaskUni" FontSize="19" FontWeight="Bold" Foreground="White"/>
                         <TextBlock Text="Gestión Académica" FontSize="10" Foreground="#A5B4FC" Margin="0,-2,0,0"/>
@@ -302,7 +297,7 @@
                     </Border.Effect>
                     <DataGrid x:Name="DgTareas" AutoGenerateColumns="False" 
                               CanUserAddRows="False" CanUserDeleteRows="False"
-                              IsReadOnly="True" GridLinesVisibility="Horizontal"
+                              IsReadOnly="True" GridLinesVisibility="None"
                               HeadersVisibility="Column" RowHeaderWidth="0"
                               BorderThickness="0" Background="Transparent"
                               SelectionMode="Single" SelectionUnit="FullRow"

@@ -9,6 +9,7 @@
         Title="TaskUni - Sistema de Gestión de Tareas" 
         Height="700" Width="1100"
         WindowStartupLocation="CenterScreen"
+        Icon="pack://application:,,,/logo.png"
         Background="#F5F7FA">
     <Grid>
         <views:Dashboard x:Name="DashboardView"/>
