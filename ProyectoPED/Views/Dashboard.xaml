@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:views="clr-namespace:ProyectoPED.Views"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="1200">
 
@@ -197,7 +198,11 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Logo TaskUni -->
-                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="25,0,0,0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0,0,0">
+                    <Button Content="☰" Click="BtnToggleSidebar_Click"
+                            Background="Transparent" Foreground="White" BorderThickness="0"
+                            FontSize="20" Cursor="Hand" Margin="0,0,15,0"
+                            ToolTip="Mostrar/Ocultar menú" Padding="0"/>
                     <Image Source="/logo.png" Width="42" Height="42" Margin="0,0,14,0"/>
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock Text="TaskUni" FontSize="19" FontWeight="Bold" Foreground="White"/>
@@ -230,13 +235,13 @@
         <!-- Contenido Principal -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="240"/>
+                <ColumnDefinition x:Name="SidebarColumn" Width="240"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition x:Name="AVLColumn" Width="0"/>
             </Grid.ColumnDefinitions>
 
             <!-- 2. Sidebar Izquierdo -->
-            <Border Grid.Column="0" Background="{StaticResource SidebarBackgroundBrush}">
+            <Border Grid.Column="0" x:Name="SidebarPanel" Background="{StaticResource SidebarBackgroundBrush}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -503,46 +508,10 @@
             </Grid>
 
             <!-- 4. Panel Derecho (Estructura AVL) -->
-            <Border Grid.Column="2" x:Name="AVLPanel" Background="White" Visibility="Collapsed">
-                <Border.Effect>
-                    <DropShadowEffect ShadowDepth="-3" BlurRadius="15" Opacity="0.15" Color="#000000"/>
-                </Border.Effect>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <!-- Header del Panel AVL -->
-                    <Border Grid.Row="0" Background="#F9FAFB" CornerRadius="12,12,0,0" Padding="20">
-                        <DockPanel>
-                            <Button DockPanel.Dock="Right" Content="✕" 
-                                    Style="{StaticResource SecondaryButtonStyle}"
-                                    Click="BtnCerrarAVL_Click" Padding="10,6"/>
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Tree" Width="24" Height="24" Foreground="#6366F1" Margin="0,0,10,0"/>
-                                <TextBlock Text="Estructura del Árbol AVL" FontSize="18" FontWeight="SemiBold" 
-                                           Foreground="#1F2937" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </DockPanel>
-                    </Border>
-
-                    <!-- Área del Árbol AVL (Placeholder) -->
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                        <Canvas x:Name="AVLCanvas" Width="400" Height="400" Background="#FAFAFA">
-                            <!-- Aquí se dibujarán los nodos del árbol AVL dinámicamente -->
-                        </Canvas>
-                    </ScrollViewer>
-
-                    <!-- Botones del Panel AVL -->
-                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
-                        <Button Content="🔄  Actualizar árbol" Style="{StaticResource PrimaryButtonStyle}" 
-                                Click="BtnActualizarAVL_Click" Margin="0,0,10,0"/>
-                        <Button Content="✕  Cerrar panel" Style="{StaticResource SecondaryButtonStyle}" 
-                                Click="BtnCerrarAVL_Click"/>
-                    </StackPanel>
-                </Grid>
+            <Border Grid.Column="2" x:Name="AVLPanel" Visibility="Collapsed">
+                <views:AVLTreeView x:Name="AVLTreeControl" 
+                                   CerrarRequested="AVLTreeControl_CerrarRequested"
+                                   ActualizarRequested="AVLTreeControl_ActualizarRequested"/>
             </Border>
         </Grid>
     </Grid>

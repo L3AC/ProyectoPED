@@ -111,19 +111,48 @@ namespace ProyectoPED.Views
 
         private void BtnVerAVL_Click(object sender, RoutedEventArgs e)
         {
+            if (SidebarColumn.Width.Value > 0)
+            {
+                SidebarColumn.Width = new GridLength(0);
+                SidebarPanel.Visibility = Visibility.Collapsed;
+            }
             AVLPanel.Visibility = Visibility.Visible;
-            AVLColumn.Width = new GridLength(350);
+            AVLColumn.Width = new GridLength(400);
         }
 
-        private void BtnCerrarAVL_Click(object sender, RoutedEventArgs e)
+        private void CerrarPanelAVL()
         {
             AVLColumn.Width = new GridLength(0);
             AVLPanel.Visibility = Visibility.Collapsed;
         }
 
-        private void BtnActualizarAVL_Click(object sender, RoutedEventArgs e)
+        private void ActualizarArbolAVL()
         {
             MessageBox.Show("Actualizando árbol AVL...", "Actualizar AVL");
+        }
+
+        private void AVLTreeControl_CerrarRequested(object sender, RoutedEventArgs e)
+        {
+            CerrarPanelAVL();
+        }
+
+        private void AVLTreeControl_ActualizarRequested(object sender, RoutedEventArgs e)
+        {
+            ActualizarArbolAVL();
+        }
+
+        private void BtnToggleSidebar_Click(object sender, RoutedEventArgs e)
+        {
+            if (SidebarColumn.Width.Value > 0)
+            {
+                SidebarColumn.Width = new GridLength(0);
+                SidebarPanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                SidebarColumn.Width = new GridLength(240);
+                SidebarPanel.Visibility = Visibility.Visible;
+            }
         }
     }
 }

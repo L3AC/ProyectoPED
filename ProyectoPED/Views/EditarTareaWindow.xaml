@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Title="Editar Tarea" 
-             Height="580" Width="500"
+             Height="620" Width="520"
              WindowStartupLocation="CenterOwner"
              ShowInTaskbar="False"
              ResizeMode="NoResize"

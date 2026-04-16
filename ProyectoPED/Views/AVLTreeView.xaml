@@ -1,0 +1,135 @@
+<UserControl x:Class="ProyectoPED.Views.AVLTreeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="400">
+
+    <Border Background="#F8F9FF">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header morado oscuro -->
+            <Border Grid.Row="0" Background="#4D4D8B">
+                <Grid>
+                    <TextBlock Text="Estructura del Árbol AVL" FontSize="20" FontWeight="Bold" 
+                               Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Content="✕" HorizontalAlignment="Right" Margin="0,0,15,0"
+                            Background="Transparent" Foreground="White" BorderThickness="0"
+                            FontSize="18" Cursor="Hand" Click="BtnCerrar_Click" Padding="10,5"/>
+                </Grid>
+            </Border>
+
+            <!-- Área del Árbol AVL -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <Canvas x:Name="AVLCanvas" Width="450" Height="380" Background="#F8F9FF">
+                    <!-- Conexiones (líneas) del árbol -->
+                    <Line X1="225" Y1="60" X2="135" Y2="130" Stroke="#4B5563" StrokeThickness="2"/>
+                    <Line X1="225" Y1="60" X2="315" Y2="130" Stroke="#4B5563" StrokeThickness="2"/>
+                    <Line X1="135" Y1="155" X2="100" Y2="220" Stroke="#4B5563" StrokeThickness="2"/>
+                    <Line X1="315" Y1="155" X2="350" Y2="220" Stroke="#4B5563" StrokeThickness="2"/>
+
+                    <!-- Nodo Raíz: Proy. Final EDA (rojo claro) -->
+                    <Border Canvas.Left="175" Canvas.Top="15" Width="100" Height="50" 
+                            Background="#FEE2E2" BorderBrush="#F87171" BorderThickness="2" CornerRadius="12">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="Proy. Final EDA" FontSize="12" FontWeight="Bold" 
+                                       Foreground="#991B1B" TextAlignment="Center"/>
+                            <TextBlock Text="3 días | fb: 0" FontSize="10" Foreground="#991B1B" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Nodo Izquierda: Inf. Física (naranja claro) -->
+                    <Border Canvas.Left="85" Canvas.Top="125" Width="100" Height="50" 
+                            Background="#FFEDD5" BorderBrush="#FB923C" BorderThickness="2" CornerRadius="12">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="Inf. Física" FontSize="12" FontWeight="Bold" 
+                                       Foreground="#9A3412" TextAlignment="Center"/>
+                            <TextBlock Text="5 días | fb: 0" FontSize="10" Foreground="#9A3412" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Nodo Derecha: Cálculo II (naranja claro) -->
+                    <Border Canvas.Left="265" Canvas.Top="125" Width="100" Height="50" 
+                            Background="#FFEDD5" BorderBrush="#FB923C" BorderThickness="2" CornerRadius="12">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="Cálculo II" FontSize="12" FontWeight="Bold" 
+                                       Foreground="#9A3412" TextAlignment="Center"/>
+                            <TextBlock Text="7 días | fb: 1" FontSize="10" Foreground="#9A3412" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Nodo: Ensayo Lit. (verde claro) -->
+                    <Border Canvas.Left="50" Canvas.Top="215" Width="100" Height="50" 
+                            Background="#DCFCE7" BorderBrush="#4ADE80" BorderThickness="2" CornerRadius="12">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="Ensayo Lit." FontSize="12" FontWeight="Bold" 
+                                       Foreground="#166534" TextAlignment="Center"/>
+                            <TextBlock Text="16 días | fb: 0" FontSize="10" Foreground="#166534" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Nodo: Lab. Prog. (completada - verde suave) -->
+                    <Border Canvas.Left="300" Canvas.Top="215" Width="100" Height="50" 
+                            Background="#F0FDF4" BorderBrush="#86EFAC" BorderThickness="2" CornerRadius="12">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="Lab. Prog." FontSize="12" FontWeight="Bold" 
+                                       Foreground="#15803D" TextAlignment="Center"/>
+                            <TextBlock Text="completada" FontSize="10" Foreground="#15803D" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <TextBlock Canvas.Left="155" Canvas.Top="330" Text="fb = factor de balance" 
+                               FontSize="11" Foreground="#6B7280" FontStyle="Italic"/>
+                </Canvas>
+            </ScrollViewer>
+
+            <!-- Botones inferiores -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+                <Button Content="Actualizar árbol" Click="BtnActualizar_Click" 
+                        Background="#4D4D8B" Foreground="White" BorderThickness="0"
+                        FontSize="14" FontWeight="SemiBold" Cursor="Hand"
+                        Padding="30,12" Margin="0,0,20,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                    CornerRadius="8" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#3D3D6B"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button Content="Cerrar panel" Click="BtnCerrar_Click" 
+                        Background="Transparent" Foreground="#4B5563" BorderThickness="2" BorderBrush="#D1D5DB"
+                        FontSize="14" FontWeight="SemiBold" Cursor="Hand"
+                        Padding="30,12">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="8" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#F3F4F6"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>
