@@ -10,39 +10,37 @@ namespace ProyectoPED.Views
             InitializeComponent();
         }
 
-        private void BtnLogin_Click(object sender, RoutedEventArgs e)
+        private async void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             string carne = txtCarneLogin.Text;
             string password = txtPasswordLogin.Password;
 
-            // TODO: Agregar lógica de conexión a la base de datos MySQL aquí
-            // 1. Conectar con la base de datos
-            // 2. Consultar la tabla usuarios con el carné ingresado
-            // 3. Comparar la contraseña (con hash) almacenada
-            // 4. Si es correcto, guardar id de usuario en memoria y abrir Dashboard
-            
-            // Simulación de validación con usuario de prueba
+            LoadingOverlay.Visibility = Visibility.Visible;
+            btnLogin.IsEnabled = false;
+            txtCarneLogin.IsEnabled = false;
+            txtPasswordLogin.IsEnabled = false;
+
+            await Task.Delay(1500);
+
             bool isSuccess = true;
-            
-            /*if (carne == "" && password == "")
-            {
-                isSuccess = true;
-            }*/
-            
+
             if (isSuccess)
             {
                 ErrorPanel.Visibility = Visibility.Collapsed;
                 
-                // Abrir la ventana principal (Dashboard)
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
                 this.Close();
             }
             else
             {
-                // 5. Mostrar mensaje de error en rojo debajo del formulario
                 ErrorPanel.Visibility = Visibility.Visible;
             }
+
+            LoadingOverlay.Visibility = Visibility.Collapsed;
+            btnLogin.IsEnabled = true;
+            txtCarneLogin.IsEnabled = true;
+            txtPasswordLogin.IsEnabled = true;
         }
 
         private void BtnIrRegistro_Click(object sender, RoutedEventArgs e)

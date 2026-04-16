@@ -63,8 +63,27 @@
                 <PasswordBox x:Name="txtPasswordLogin" Style="{StaticResource RoundedPasswordBox}" 
                              materialDesign:HintAssist.Hint="••••••••" Margin="0,0,0,25"/>
 
-                <Button Content="Iniciar sesión" Style="{StaticResource PrimaryButton}" 
+                <Button x:Name="btnLogin" Content="Iniciar sesión" Style="{StaticResource PrimaryButton}" 
                         Click="BtnLogin_Click" Margin="0,0,0,20"/>
+
+                <Grid x:Name="LoadingOverlay" Visibility="Collapsed">
+                    <Border Background="White" Opacity="0.9" CornerRadius="8"/>
+                    <TextBlock x:Name="LoadingText" Text="Verificando..." 
+                               Foreground="#6B7280" FontSize="14" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         From="1" To="0.3" Duration="0:0:0.5"
+                                                         AutoReverse="True"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </TextBlock.Triggers>
+                    </TextBlock>
+                </Grid>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
                     <TextBlock Text="¿No tienes cuenta? " Foreground="#6B7280" FontSize="13"/>
