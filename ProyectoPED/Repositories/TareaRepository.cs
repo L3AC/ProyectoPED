@@ -2,7 +2,6 @@ using MySqlConnector;
 using ProyectoPED.Data;
 using ProyectoPED.Models;
 using System.Collections.ObjectModel;
-using System.Windows;
 
 namespace ProyectoPED.Repositories
 {
@@ -40,9 +39,9 @@ namespace ProyectoPED.Repositories
                     tareas.Add(tarea);
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show($"Error al cargar tareas: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return new ObservableCollection<Tarea>();
             }
 
             return tareas;
@@ -68,9 +67,8 @@ namespace ProyectoPED.Repositories
 
                 return command.ExecuteNonQuery() > 0;
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show($"Error al insertar tarea: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }
@@ -96,9 +94,8 @@ namespace ProyectoPED.Repositories
 
                 return command.ExecuteNonQuery() > 0;
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show($"Error al actualizar tarea: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }
@@ -117,9 +114,8 @@ namespace ProyectoPED.Repositories
 
                 return command.ExecuteNonQuery() > 0;
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show($"Error al completar tarea: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }
@@ -138,9 +134,8 @@ namespace ProyectoPED.Repositories
 
                 return command.ExecuteNonQuery() > 0;
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show($"Error al deshacer tarea: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }
@@ -159,9 +154,8 @@ namespace ProyectoPED.Repositories
 
                 return command.ExecuteNonQuery() > 0;
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show($"Error al eliminar tarea: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }

@@ -22,12 +22,12 @@ namespace ProyectoPED.Views
             // 4. Si es correcto, guardar id de usuario en memoria y abrir Dashboard
             
             // Simulación de validación con usuario de prueba
-            bool isSuccess = false;
+            bool isSuccess = true;
             
-            if (carne == "admin" && password == "1234")
+            /*if (carne == "" && password == "")
             {
                 isSuccess = true;
-            }
+            }*/
             
             if (isSuccess)
             {

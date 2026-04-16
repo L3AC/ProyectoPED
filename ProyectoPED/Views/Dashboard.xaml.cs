@@ -10,7 +10,8 @@ namespace ProyectoPED.Views
     public partial class Dashboard : UserControl
     {
         private ObservableCollection<Tarea> listaTareas = null!;
-        private int usuarioId = 1; //SE COLOCA 1 COMO USUARIO DEFAULT 
+        private int usuarioId = 1;
+        private bool modoOffline = false;
 
         public Dashboard()
         {
@@ -21,8 +22,31 @@ namespace ProyectoPED.Views
 
         private void CargarTareas()
         {
-            listaTareas = TareaRepository.GetTareasPorUsuario(usuarioId);
+            var tareasBD = TareaRepository.GetTareasPorUsuario(usuarioId);
+            if (tareasBD != null && tareasBD.Count > 0)
+            {
+                listaTareas = tareasBD;
+            }
+            else
+            {
+                listaTareas = CargarDatosHardcodeados();
+                modoOffline = true;
+            }
             DgTareas.ItemsSource = listaTareas;
+        }
+
+        private ObservableCollection<Tarea> CargarDatosHardcodeados()
+        {
+            var tareas = new ObservableCollection<Tarea>();
+            var fechaBase = DateTime.Now;
+
+            tareas.Add(new Tarea { Id = 1, UsuarioId = 1, Titulo = "Proyecto Final de Estructura de Datos", Descripcion = "Implementar un árbol AVL con todas las operaciones", FechaLimite = fechaBase.AddDays(3), Prioridad = "Alta", Estado = "Pendiente", CreatedAt = fechaBase });
+            tareas.Add(new Tarea { Id = 2, UsuarioId = 1, Titulo = "Ensayo de Literatura", Descripcion = "Analisis de la obra 'Cien años de soledad'", FechaLimite = fechaBase.AddDays(16), Prioridad = "Media", Estado = "Pendiente", CreatedAt = fechaBase });
+            tareas.Add(new Tarea { Id = 3, UsuarioId = 1, Titulo = "Laboratorio de Programación", Descripcion = "Completar ejercicios de herencia en Java", FechaLimite = fechaBase.AddDays(-2), Prioridad = "Baja", Estado = "Completada", CreatedAt = fechaBase.AddDays(-10) });
+            tareas.Add(new Tarea { Id = 4, UsuarioId = 1, Titulo = "Informe de Física", Descripcion = "Reporte sobre termodinámica", FechaLimite = fechaBase.AddDays(5), Prioridad = "Media", Estado = "Pendiente", CreatedAt = fechaBase });
+            tareas.Add(new Tarea { Id = 5, UsuarioId = 1, Titulo = "Examen de Cálculo II", Descripcion = "Estudiar integrales múltiples", FechaLimite = fechaBase.AddDays(7), Prioridad = "Alta", Estado = "Pendiente", CreatedAt = fechaBase });
+
+            return tareas;
         }
 
         private void BtnNuevaTarea_Click(object sender, RoutedEventArgs e)
@@ -70,7 +94,16 @@ namespace ProyectoPED.Views
                 MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
-                MessageBox.Show("Cerrando sesión...", "Cerrar Sesión");
+                var loginWindow = new LoginWindow();
+                var mainWindow = Window.GetWindow(this);
+                
+                if (mainWindow != null)
+                {
+                    var app = Application.Current;
+                    mainWindow.Hide();
+                    loginWindow.Show();
+                    loginWindow.Closed += (s, args) => app.Shutdown();
+                }
             }
         }
 
