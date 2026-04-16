@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="400">
+             d:DesignHeight="550" d:DesignWidth="400">
 
     <Border Background="#F8F9FF">
         <Grid>
@@ -27,7 +27,7 @@
 
             <!-- Área del Árbol AVL -->
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Canvas x:Name="AVLCanvas" Width="450" Height="380" Background="#F8F9FF">
+                <Canvas x:Name="AVLCanvas" Width="450" Height="350" Background="#F8F9FF">
                     <!-- Conexiones (líneas) del árbol -->
                     <Line X1="225" Y1="60" X2="135" Y2="130" Stroke="#4B5563" StrokeThickness="2"/>
                     <Line X1="225" Y1="60" X2="315" Y2="130" Stroke="#4B5563" StrokeThickness="2"/>
@@ -90,11 +90,11 @@
             </ScrollViewer>
 
             <!-- Botones inferiores -->
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,15">
                 <Button Content="Actualizar árbol" Click="BtnActualizar_Click" 
                         Background="#4D4D8B" Foreground="White" BorderThickness="0"
                         FontSize="14" FontWeight="SemiBold" Cursor="Hand"
-                        Padding="30,12" Margin="0,0,20,0">
+                        Padding="30,5" Margin="0,0,20,0">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="border" Background="{TemplateBinding Background}" 
@@ -112,7 +112,7 @@
                 <Button Content="Cerrar panel" Click="BtnCerrar_Click" 
                         Background="Transparent" Foreground="#4B5563" BorderThickness="2" BorderBrush="#D1D5DB"
                         FontSize="14" FontWeight="SemiBold" Cursor="Hand"
-                        Padding="30,12">
+                        Padding="30,5">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="border" Background="{TemplateBinding Background}" 

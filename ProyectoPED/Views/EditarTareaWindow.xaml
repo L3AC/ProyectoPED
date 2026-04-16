@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Title="Editar Tarea" 
-             Height="620" Width="520"
+             Height="700" Width="520"
              WindowStartupLocation="CenterOwner"
              ShowInTaskbar="False"
              ResizeMode="NoResize"
@@ -30,7 +30,7 @@
                 </Border>
 
                 <!-- Formulario -->
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="25,20">
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="25,20" MaxHeight="350">
                     <StackPanel>
                         <!-- ID (solo lectura) -->
                         <TextBlock Text="ID de la tarea" FontSize="13" FontWeight="Medium" Foreground="#374151" Margin="0,0,0,8"/>
@@ -80,12 +80,12 @@
                 </ScrollViewer>
 
                 <!-- Botones -->
-                <Border Grid.Row="2" Background="#F9FAFB" CornerRadius="0,0,12,12" Padding="25,15">
+                <Border Grid.Row="2" Background="#F9FAFB" CornerRadius="0,0,12,12" Padding="25,20">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Content="Cancelar" Padding="20,10" Margin="0,0,10,0"
+                        <Button Content="Cancelar" Padding="25,5" Margin="0,0,10,0"
                                 Style="{StaticResource MaterialDesignOutlinedButton}"
                                 Click="BtnCancelar_Click"/>
-                        <Button Content="Guardar Cambios" Padding="20,10"
+                        <Button Content="Guardar Cambios" Padding="25,5"
                                 Style="{StaticResource MaterialDesignRaisedButton}"
                                 Background="#F59E0B"
                                 Click="BtnGuardar_Click"/>
