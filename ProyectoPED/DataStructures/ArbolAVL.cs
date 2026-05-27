@@ -220,7 +220,7 @@ namespace ProyectoPED.DataStructures
             var info = new NodoInfoArbol
             {
                 TareaId = nodo.Tarea.Id,
-                Titulo = nodo.Tarea.Titulo.Length > 15 ? nodo.Tarea.Titulo.Substring(0, 15) + "..." : nodo.Tarea.Titulo,
+                Titulo = nodo.Tarea.Titulo.Length > 35 ? nodo.Tarea.Titulo.Substring(0, 35) + "..." : nodo.Tarea.Titulo,
                 DiasRestantes = nodo.Tarea.DiasRestantes,
                 Prioridad = nodo.Tarea.Prioridad,
                 PadreId = padreId,

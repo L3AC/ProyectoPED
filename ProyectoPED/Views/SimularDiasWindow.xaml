@@ -67,31 +67,15 @@
                                 </Grid>
                                 <Button Content="Simular Días" 
                                         Click="BtnSimularDias_Click"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
                                         Background="#8B5CF6" 
-                                        Foreground="White" 
-                                        Padding="16,12" 
-                                        MinWidth="160"
+                                        Height="46"
+                                        MinWidth="180"
                                         Margin="0,12,0,0" 
                                         FontWeight="SemiBold"
-                                        FontSize="13"
+                                        FontSize="14"
                                         Cursor="Hand"
-                                        BorderThickness="0"
-                                        HorizontalAlignment="Stretch">
-                                    <Button.Template>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border x:Name="border" Background="{TemplateBinding Background}" 
-                                                    CornerRadius="6">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                                  Margin="{TemplateBinding Padding}"/>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="border" Property="Background" Value="#7C3AED"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Button.Template>
-                                </Button>
+                                        HorizontalAlignment="Stretch"/>
                             </StackPanel>
                         </Border>
 
@@ -116,31 +100,15 @@
                                 </Grid>
                                 <Button Content="Simular hasta Fecha" 
                                         Click="BtnSimularFecha_Click"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
                                         Background="#6366F1" 
-                                        Foreground="White" 
-                                        Padding="16,12" 
-                                        MinWidth="160"
+                                        Height="46"
+                                        MinWidth="180"
                                         Margin="0,12,0,0" 
                                         FontWeight="SemiBold"
-                                        FontSize="13"
+                                        FontSize="14"
                                         Cursor="Hand"
-                                        BorderThickness="0"
-                                        HorizontalAlignment="Stretch">
-                                    <Button.Template>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border x:Name="border" Background="{TemplateBinding Background}" 
-                                                    CornerRadius="6">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                                  Margin="{TemplateBinding Padding}"/>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="border" Property="Background" Value="#4F46E5"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Button.Template>
-                                </Button>
+                                        HorizontalAlignment="Stretch"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
