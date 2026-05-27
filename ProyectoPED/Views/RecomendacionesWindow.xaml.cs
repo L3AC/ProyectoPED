@@ -171,13 +171,7 @@ namespace ProyectoPED.Views
                 };
                 stack.Children.Add(titulo);
 
-                var intensidad = new TextBlock
-                {
-                    Text = $"Intensidad: {cuello.IntensidadCarga:F1}%",
-                    FontSize = 12,
-                    Margin = new Thickness(0, 5, 0, 5)
-                };
-                stack.Children.Add(intensidad);
+
 
                 foreach (var prior in cuello.TareasPorPrioridad)
                 {
