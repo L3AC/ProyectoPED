@@ -61,27 +61,7 @@
                             <ComboBoxItem Content="Baja"/>
                         </ComboBox>
 
-                        <!-- Subtareas -->
-                        <TextBlock Text="Subtareas" FontSize="13" FontWeight="Medium" Foreground="#374151" Margin="0,20,0,8"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox x:Name="TxtSubtarea" Grid.Column="0" Padding="12,10" FontSize="14"
-                                     materialDesign:HintAssist.Hint="Nueva subtarea"
-                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
-                            <Button Grid.Column="1" Content="+" Margin="10,0,0,0" Width="40" Height="40"
-                                    Style="{StaticResource MaterialDesignRaisedButton}"
-                                    Click="BtnAgregarSubtarea_Click"/>
-                        </Grid>
-                        <ListBox x:Name="LbSubtareas" Margin="0,10,0,0" MaxHeight="100"/>
 
-                        <!-- Dependencias -->
-                        <TextBlock Text="Dependencias (tarea de la que depende)" FontSize="13" FontWeight="Medium" Foreground="#374151" Margin="0,20,0,8"/>
-                        <ComboBox x:Name="CmbDependencias" Padding="12,10" FontSize="14"
-                                  materialDesign:HintAssist.Hint="Seleccionar tarea (opcional)"
-                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"/>
                     </StackPanel>
                 </ScrollViewer>
 

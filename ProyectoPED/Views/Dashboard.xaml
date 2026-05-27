@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:views="clr-namespace:ProyectoPED.Views"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="1200">
 
@@ -177,6 +176,31 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="DangerButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FEE2E2"/>
+            <Setter Property="Foreground" Value="#DC2626"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FECACA"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <Grid Background="#F3F4F6">
@@ -235,9 +259,9 @@
         <!-- Contenido Principal -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="SidebarColumn" Width="240"/>
+                <ColumnDefinition x:Name="SidebarColumn" Width="240" MinWidth="180" MaxWidth="400"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition x:Name="AVLColumn" Width="0"/>
             </Grid.ColumnDefinitions>
 
             <!-- 2. Sidebar Izquierdo -->
@@ -268,35 +292,82 @@
 
                     <!-- Sección inferior del sidebar -->
                     <StackPanel Grid.Row="1" Margin="20,0,20,20">
-                        <Separator Background="#3D3D6B" Margin="0,0,0,15"/>
+                        <Separator Background="#3D3D6B" Margin="0,0,0,10"/>
                         <Button Content="↩  Deshacer acción" Style="{StaticResource SidebarButtonStyle}" 
                                 Click="BtnDeshacer_Click" x:Name="BtnDeshacer"/>
-                        <StackPanel Orientation="Horizontal" Margin="12,8,0,0">
-                            <materialDesign:PackIcon Kind="StackExchange" Foreground="#A5B4FC" Width="16" Height="16" Margin="0,0,8,0"/>
-                            <TextBlock Text="Pila" FontSize="12" Foreground="#A5B4FC"/>
-                        </StackPanel>
+                        <Button Content="🔑  Cambiar contraseña" Style="{StaticResource SidebarButtonStyle}" 
+                                Click="BtnCambiarPassword_Click" x:Name="BtnCambiarPassword"
+                                Margin="0,5,0,0"/>
                     </StackPanel>
                 </Grid>
             </Border>
 
+            <!-- GridSplitter para redimensionar sidebar -->
+            <GridSplitter Grid.Column="1" Width="5" 
+                          Background="Transparent"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          ResizeBehavior="PreviousAndNext"
+                          Cursor="SizeWE">
+                <GridSplitter.Style>
+                    <Style TargetType="GridSplitter">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#818CF8"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </GridSplitter.Style>
+            </GridSplitter>
+
             <!-- 3. Área Central (Panel de Tareas) -->
-            <Grid Grid.Column="1" Margin="25">
+            <Grid Grid.Column="2" Margin="25">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <!-- Título y Fecha -->
-                <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                <StackPanel Grid.Row="0" Margin="0,0,0,15">
                     <TextBlock Text="Panel de Tareas" FontSize="28" FontWeight="Bold" 
                                Foreground="#1F2937"/>
                     <TextBlock x:Name="TxtFechaActual" Text="00 / 00 / 0000" 
                                FontSize="14" Foreground="#6B7280" Margin="0,5,0,0"/>
                 </StackPanel>
 
+                <!-- Buscador -->
+                <Border Grid.Row="1" Background="White" CornerRadius="8" 
+                        BorderBrush="#E5E7EB" BorderThickness="1" 
+                        Height="38" Margin="0,0,0,15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Grid.Column="0" Kind="Magnify" 
+                                                  Foreground="#9CA3AF" Width="18" Height="18"
+                                                  Margin="12,0,8,0" VerticalAlignment="Center"/>
+                        <TextBox x:Name="TxtBuscar" Grid.Column="1" 
+                                 TextChanged="TxtBuscar_TextChanged"
+                                 Background="Transparent" BorderThickness="0"
+                                 FontSize="14" Foreground="#374151"
+                                 VerticalAlignment="Center"
+                                 materialDesign:HintAssist.Hint="Buscar por título, descripción o prioridad..."
+                                 materialDesign:HintAssist.Foreground="#9CA3AF"/>
+                        <Button Grid.Column="2" x:Name="BtnLimpiarBusqueda"
+                                Content="✕" Visibility="Collapsed"
+                                Click="BtnLimpiarBusqueda_Click"
+                                Background="Transparent" BorderThickness="0"
+                                Foreground="#9CA3AF" FontSize="14"
+                                Cursor="Hand" Padding="8,0" Margin="0,0,4,0"/>
+                    </Grid>
+                </Border>
+
                 <!-- DataGrid de Tareas -->
-                <Border Grid.Row="1" Background="White" CornerRadius="12">
+                <Border Grid.Row="2" Background="White" CornerRadius="12">
                     <Border.Effect>
                         <DropShadowEffect ShadowDepth="2" BlurRadius="10" Opacity="0.08" Color="#000000"/>
                     </Border.Effect>
@@ -426,15 +497,31 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             
-                            <!-- Acciones con botones condicionales según Estado -->
+                            <!-- Acciones -->
                             <DataGridTemplateColumn Header="Acciones" Width="240">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Grid>
-                                            <!-- Botones para estado Pendiente -->
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                <StackPanel.Style>
-                                                    <Style TargetType="StackPanel">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button Style="{StaticResource EditButtonStyle}"
+                                                    Click="BtnEditar_Click" Tag="{Binding Id}"
+                                                    Margin="0,0,4,0" MinWidth="55" Padding="8,6">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <materialDesign:PackIcon Kind="Pencil" Width="13" Height="13" Margin="0,0,3,0"/>
+                                                    <TextBlock Text="Editar" FontSize="12"/>
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Style="{StaticResource DangerButtonStyle}"
+                                                    Click="BtnEliminar_Click" Tag="{Binding Id}"
+                                                    Margin="0,0,4,0" MinWidth="55" Padding="8,6">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <materialDesign:PackIcon Kind="Delete" Width="13" Height="13" Margin="0,0,3,0"/>
+                                                    <TextBlock Text="Eliminar" FontSize="12"/>
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Click="BtnCompletar_Click" Tag="{Binding Id}"
+                                                    MinWidth="55" Padding="8,6">
+                                                <Button.Style>
+                                                    <Style TargetType="Button" BasedOn="{StaticResource SuccessButtonStyle}">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding Estado}" Value="Completada">
@@ -442,43 +529,13 @@
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
-                                                </StackPanel.Style>
-                                                <Button Style="{StaticResource SuccessButtonStyle}"
-                                                        Click="BtnCompletar_Click" Tag="{Binding Id}"
-                                                        Margin="0,0,8,0" MinWidth="90">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <materialDesign:PackIcon Kind="Check" Width="14" Height="14" Margin="0,0,4,0"/>
-                                                        <TextBlock Text="Completar"/>
-                                                    </StackPanel>
-                                                </Button>
-                                                <Button Style="{StaticResource EditButtonStyle}"
-                                                        Click="BtnEditar_Click" Tag="{Binding Id}"
-                                                        MinWidth="80">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <materialDesign:PackIcon Kind="Pencil" Width="14" Height="14" Margin="0,0,4,0"/>
-                                                        <TextBlock Text="Editar"/>
-                                                    </StackPanel>
-                                                </Button>
-                                            </StackPanel>
-                                            <!-- Botón Deshacer para estado Completada -->
-                                            <Button Click="BtnDeshacer_Click" Tag="{Binding Id}"
-                                                    HorizontalAlignment="Center" MinWidth="90">
-                                                <Button.Style>
-                                                    <Style TargetType="Button" BasedOn="{StaticResource UndoButtonStyle}">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Estado}" Value="Completada">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
                                                 </Button.Style>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <materialDesign:PackIcon Kind="Undo" Width="14" Height="14" Margin="0,0,4,0"/>
-                                                    <TextBlock Text="Deshacer"/>
+                                                    <materialDesign:PackIcon Kind="Check" Width="13" Height="13" Margin="0,0,3,0"/>
+                                                    <TextBlock Text="Compl." FontSize="12"/>
                                                 </StackPanel>
                                             </Button>
-                                        </Grid>
+                                        </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -487,7 +544,7 @@
                 </Border>
 
                 <!-- Leyenda de Colores -->
-                <Border Grid.Row="2" Background="White" CornerRadius="10" Padding="20" Margin="0,20,0,0">
+                <Border Grid.Row="3" Background="White" CornerRadius="10" Padding="20" Margin="0,20,0,0">
                     <Border.Effect>
                         <DropShadowEffect ShadowDepth="1" BlurRadius="6" Opacity="0.05" Color="#000000"/>
                     </Border.Effect>
@@ -506,13 +563,6 @@
                     </StackPanel>
                 </Border>
             </Grid>
-
-            <!-- 4. Panel Derecho (Estructura AVL) -->
-            <Border Grid.Column="2" x:Name="AVLPanel" Visibility="Collapsed">
-                <views:AVLTreeView x:Name="AVLTreeControl" 
-                                   CerrarRequested="AVLTreeControl_CerrarRequested"
-                                   ActualizarRequested="AVLTreeControl_ActualizarRequested"/>
-            </Border>
         </Grid>
     </Grid>
 </UserControl>

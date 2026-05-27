@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              d:DesignHeight="550" d:DesignWidth="400">
 
@@ -14,87 +15,41 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Header morado oscuro -->
+            <!-- Header -->
             <Border Grid.Row="0" Background="#4D4D8B">
                 <Grid>
-                    <TextBlock Text="Estructura del Árbol AVL" FontSize="20" FontWeight="Bold" 
-                               Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <materialDesign:PackIcon Kind="Tree" Width="22" Height="22" Foreground="White" Margin="0,0,10,0"/>
+                        <TextBlock Text="Árbol AVL - Tareas" FontSize="20" FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
                     <Button Content="✕" HorizontalAlignment="Right" Margin="0,0,15,0"
                             Background="Transparent" Foreground="White" BorderThickness="0"
                             FontSize="18" Cursor="Hand" Click="BtnCerrar_Click" Padding="10,5"/>
                 </Grid>
             </Border>
 
-            <!-- Área del Árbol AVL -->
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Canvas x:Name="AVLCanvas" Width="450" Height="350" Background="#F8F9FF">
-                    <!-- Conexiones (líneas) del árbol -->
-                    <Line X1="225" Y1="60" X2="135" Y2="130" Stroke="#4B5563" StrokeThickness="2"/>
-                    <Line X1="225" Y1="60" X2="315" Y2="130" Stroke="#4B5563" StrokeThickness="2"/>
-                    <Line X1="135" Y1="155" X2="100" Y2="220" Stroke="#4B5563" StrokeThickness="2"/>
-                    <Line X1="315" Y1="155" X2="350" Y2="220" Stroke="#4B5563" StrokeThickness="2"/>
-
-                    <!-- Nodo Raíz: Proy. Final EDA (rojo claro) -->
-                    <Border Canvas.Left="175" Canvas.Top="15" Width="100" Height="50" 
-                            Background="#FEE2E2" BorderBrush="#F87171" BorderThickness="2" CornerRadius="12">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="Proy. Final EDA" FontSize="12" FontWeight="Bold" 
-                                       Foreground="#991B1B" TextAlignment="Center"/>
-                            <TextBlock Text="3 días | fb: 0" FontSize="10" Foreground="#991B1B" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
-
-                    <!-- Nodo Izquierda: Inf. Física (naranja claro) -->
-                    <Border Canvas.Left="85" Canvas.Top="125" Width="100" Height="50" 
-                            Background="#FFEDD5" BorderBrush="#FB923C" BorderThickness="2" CornerRadius="12">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="Inf. Física" FontSize="12" FontWeight="Bold" 
-                                       Foreground="#9A3412" TextAlignment="Center"/>
-                            <TextBlock Text="5 días | fb: 0" FontSize="10" Foreground="#9A3412" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
-
-                    <!-- Nodo Derecha: Cálculo II (naranja claro) -->
-                    <Border Canvas.Left="265" Canvas.Top="125" Width="100" Height="50" 
-                            Background="#FFEDD5" BorderBrush="#FB923C" BorderThickness="2" CornerRadius="12">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="Cálculo II" FontSize="12" FontWeight="Bold" 
-                                       Foreground="#9A3412" TextAlignment="Center"/>
-                            <TextBlock Text="7 días | fb: 1" FontSize="10" Foreground="#9A3412" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
-
-                    <!-- Nodo: Ensayo Lit. (verde claro) -->
-                    <Border Canvas.Left="50" Canvas.Top="215" Width="100" Height="50" 
-                            Background="#DCFCE7" BorderBrush="#4ADE80" BorderThickness="2" CornerRadius="12">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="Ensayo Lit." FontSize="12" FontWeight="Bold" 
-                                       Foreground="#166534" TextAlignment="Center"/>
-                            <TextBlock Text="16 días | fb: 0" FontSize="10" Foreground="#166534" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
-
-                    <!-- Nodo: Lab. Prog. (completada - verde suave) -->
-                    <Border Canvas.Left="300" Canvas.Top="215" Width="100" Height="50" 
-                            Background="#F0FDF4" BorderBrush="#86EFAC" BorderThickness="2" CornerRadius="12">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="Lab. Prog." FontSize="12" FontWeight="Bold" 
-                                       Foreground="#15803D" TextAlignment="Center"/>
-                            <TextBlock Text="completada" FontSize="10" Foreground="#15803D" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
-
-                    <TextBlock Canvas.Left="155" Canvas.Top="330" Text="fb = factor de balance" 
-                               FontSize="11" Foreground="#6B7280" FontStyle="Italic"/>
+            <!-- Área del árbol con scroll -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                          Background="#F8F9FF">
+                <Canvas x:Name="AVLCanvas" Background="#F8F9FF" Width="800" Height="600">
+                    <Canvas.Resources>
+                        <Style TargetType="Border" x:Key="NodeBorderStyle">
+                            <Setter Property="BorderBrush" Value="#4B5563"/>
+                            <Setter Property="BorderThickness" Value="2"/>
+                            <Setter Property="CornerRadius" Value="12"/>
+                            <Setter Property="Width" Value="110"/>
+                            <Setter Property="MinHeight" Value="55"/>
+                        </Style>
+                    </Canvas.Resources>
                 </Canvas>
             </ScrollViewer>
 
             <!-- Botones inferiores -->
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,15">
-                <Button Content="Actualizar árbol" Click="BtnActualizar_Click" 
+                <Button Content="🔄 Actualizar árbol" Click="BtnActualizar_Click" 
                         Background="#4D4D8B" Foreground="White" BorderThickness="0"
                         FontSize="14" FontWeight="SemiBold" Cursor="Hand"
-                        Padding="30,5" Margin="0,0,20,0">
+                        Padding="30,8" Margin="0,0,20,0" Height="38">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="border" Background="{TemplateBinding Background}" 
@@ -109,10 +64,10 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <Button Content="Cerrar panel" Click="BtnCerrar_Click" 
+                <Button Content="✕ Cerrar panel" Click="BtnCerrar_Click" 
                         Background="Transparent" Foreground="#4B5563" BorderThickness="2" BorderBrush="#D1D5DB"
                         FontSize="14" FontWeight="SemiBold" Cursor="Hand"
-                        Padding="30,5">
+                        Padding="30,8" Height="38">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="border" Background="{TemplateBinding Background}" 
@@ -130,6 +85,15 @@
                     </Button.Template>
                 </Button>
             </StackPanel>
+            
+            <!-- Info del árbol -->
+            <Border Grid.Row="2" Background="#EEF2FF" Padding="15,10" Margin="20,0,20,70" CornerRadius="8">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock x:Name="TxtInfoNodos" Text="Nodos: 0" FontSize="12" Foreground="#4B5563" Margin="0,0,20,0"/>
+                    <TextBlock x:Name="TxtInfoAltura" Text="Altura: 0" FontSize="12" Foreground="#4B5563" Margin="0,0,20,0"/>
+                    <TextBlock x:Name="TxtInfoBalance" Text="Balance: OK" FontSize="12" Foreground="#4B5563"/>
+                </StackPanel>
+            </Border>
         </Grid>
     </Border>
 </UserControl>

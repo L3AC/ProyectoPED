@@ -33,7 +33,7 @@ namespace ProyectoPED.Repositories
                         Descripcion = reader.IsDBNull(3) ? null : reader.GetString(3),
                         FechaLimite = reader.GetDateTime(4),
                         Prioridad = reader.GetString(5),
-                        Estado = reader.GetString(6),
+                        Estado = Enum.TryParse<EstadoTarea>(reader.GetString(6), true, out var estado) ? estado : EstadoTarea.Pendiente,
                         CreatedAt = reader.GetDateTime(7)
                     };
                     tareas.Add(tarea);
@@ -63,7 +63,7 @@ namespace ProyectoPED.Repositories
                 command.Parameters.AddWithValue("@descripcion", tarea.Descripcion ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@fechaLimite", tarea.FechaLimite);
                 command.Parameters.AddWithValue("@prioridad", tarea.Prioridad);
-                command.Parameters.AddWithValue("@estado", tarea.Estado);
+                command.Parameters.AddWithValue("@estado", tarea.Estado.ToString());
 
                 return command.ExecuteNonQuery() > 0;
             }
@@ -90,7 +90,7 @@ namespace ProyectoPED.Repositories
                 command.Parameters.AddWithValue("@descripcion", tarea.Descripcion ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@fechaLimite", tarea.FechaLimite);
                 command.Parameters.AddWithValue("@prioridad", tarea.Prioridad);
-                command.Parameters.AddWithValue("@estado", tarea.Estado);
+                command.Parameters.AddWithValue("@estado", tarea.Estado.ToString());
 
                 return command.ExecuteNonQuery() > 0;
             }
@@ -131,6 +131,27 @@ namespace ProyectoPED.Repositories
 
                 using var command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@id", tareaId);
+
+                return command.ExecuteNonQuery() > 0;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool ActualizarEstado(int tareaId, string estado)
+        {
+            try
+            {
+                using var connection = DatabaseConnection.GetConnection();
+                connection.Open();
+
+                string query = "UPDATE tareas SET estado = @estado WHERE id = @id";
+
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", tareaId);
+                command.Parameters.AddWithValue("@estado", estado);
 
                 return command.ExecuteNonQuery() > 0;
             }

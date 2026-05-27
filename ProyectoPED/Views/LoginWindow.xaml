@@ -5,7 +5,8 @@
         Title="TaskUni - Iniciar sesión" Height="550" Width="450"
         WindowStartupLocation="CenterScreen"
         Background="#F4F4F5"
-        ResizeMode="NoResize"
+        ResizeMode="CanResize"
+        MinWidth="400" MinHeight="500"
         FontFamily="Segoe UI">
     <Window.Resources>
         <!-- Estilo base para cajas de texto -->
@@ -94,8 +95,8 @@
 
                 <Border x:Name="ErrorPanel" Background="#FEE2E2" BorderBrush="#FCA5A5" BorderThickness="1" CornerRadius="8" Padding="10" Visibility="Collapsed">
                     <StackPanel>
-                        <TextBlock Text="Carné o contraseña incorrectos" Foreground="#B91C1C" FontWeight="SemiBold" FontSize="13" HorizontalAlignment="Center"/>
-                        <TextBlock Text="(solo visible si hay error)" Foreground="#EF4444" FontSize="11" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="ErrorTitle" Text="Carné o contraseña incorrectos" Foreground="#B91C1C" FontWeight="SemiBold" FontSize="13" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="ErrorDetail" Text="(solo visible si hay error)" Foreground="#EF4444" FontSize="11" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Border>
             </StackPanel>

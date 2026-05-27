@@ -1,7 +1,15 @@
 using System;
+using System.Collections.Generic;
 
 namespace ProyectoPED.Models
 {
+    public enum EstadoTarea
+    {
+        Pendiente,
+        Completada,
+        Vencida
+    }
+
     public class Tarea
     {
         public int Id { get; set; }
@@ -10,17 +18,23 @@ namespace ProyectoPED.Models
         public string? Descripcion { get; set; }
         public DateTime FechaLimite { get; set; }
         public string Prioridad { get; set; } = "Media";
-        public string Estado { get; set; } = "Pendiente";
+        public EstadoTarea Estado { get; set; } = EstadoTarea.Pendiente;
         public DateTime CreatedAt { get; set; }
-        
+
         public int DiasRestantes => (FechaLimite.Date - DateTime.Today).Days;
-        public string DiasRestantesTexto => DiasRestantes >= 0 ? $"{DiasRestantes} días" : $"{Math.Abs(DiasRestantes)} días";
-        
+        public string DiasRestantesTexto => DiasRestantes switch
+        {
+            > 0 => $"{DiasRestantes} días",
+            0 => "Hoy",
+            _ => "---"
+        };
+
         public string ColorDiasRestantes => DiasRestantes switch
         {
             >= 8 => "#22C55E",
             >= 4 => "#F97316",
-            _ => "#EF4444"
+            >= 0 => "#EF4444",
+            _ => "#7C3AED"
         };
 
         public string ColorPrioridad => Prioridad switch
@@ -41,9 +55,9 @@ namespace ProyectoPED.Models
 
         public string ColorEstado => Estado switch
         {
-            "Completada" => "#10B981",
-            "Pendiente" => "#6366F1",
-            "Vencida" => "#EF4444",
+            EstadoTarea.Completada => "#10B981",
+            EstadoTarea.Pendiente => "#6366F1",
+            EstadoTarea.Vencida => "#EF4444",
             _ => "#6366F1"
         };
     }
@@ -55,5 +69,12 @@ namespace ProyectoPED.Models
         public string Nombre { get; set; } = "";
         public string Password { get; set; } = "";
         public DateTime CreatedAt { get; set; }
+    }
+
+    public class AccionHistorial
+    {
+        public Tarea Tarea { get; set; } = null!;
+        public string TipoAccion { get; set; } = "";
+        public DateTime FechaAccion { get; set; } = DateTime.Now;
     }
 }

@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="TaskUni - Sistema de Gestión de Tareas" 
         Height="700" Width="1100"
+        MinWidth="900" MinHeight="500"
         WindowStartupLocation="CenterScreen"
         Icon="pack://application:,,,/logo.png"
         Background="#F5F7FA">

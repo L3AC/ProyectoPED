@@ -1,21 +1,27 @@
 using System.Windows;
 using ProyectoPED.Views;
+using ProyectoPED.Models;
 
 namespace ProyectoPED
 {
     public partial class MainWindow : Window
     {
+        private Usuario usuarioActual = null!;
+
         public MainWindow()
         {
             InitializeComponent();
-            CargarDashboard();
         }
 
-        private void CargarDashboard()
+        public MainWindow(Usuario usuario) : this()
         {
-            DashboardView.TxtNombreUsuario.Text = "Estudiante Demo";
-            DashboardView.TxtCarnet.Text = "(20210001)";
-            DashboardView.TxtFechaActual.Text = $"Fecha: {DateTime.Now:dd/MM/yyyy}";
+            usuarioActual = usuario;
+            CargarDashboard(usuario);
+        }
+
+        private void CargarDashboard(Usuario usuario)
+        {
+            DashboardView.CargarUsuario(usuario.Id, usuario.Nombre, usuario.Carne);
         }
     }
 }

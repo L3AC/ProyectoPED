@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using ProyectoPED.Repositories;
 
 namespace ProyectoPED.Views
 {
@@ -12,61 +13,61 @@ namespace ProyectoPED.Views
 
         private async void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            string carne = txtCarneLogin.Text;
+            string carne = txtCarneLogin.Text.Trim();
             string password = txtPasswordLogin.Password;
+
+            if (string.IsNullOrWhiteSpace(carne) || string.IsNullOrWhiteSpace(password))
+            {
+                ErrorPanel.Visibility = Visibility.Visible;
+                ((TextBlock)ErrorPanel.FindName("ErrorTitle")).Text = "Campos requeridos";
+                ((TextBlock)ErrorPanel.FindName("ErrorDetail")).Text = "Por favor ingresa tu carné y contraseña";
+                return;
+            }
 
             LoadingOverlay.Visibility = Visibility.Visible;
             btnLogin.IsEnabled = false;
             txtCarneLogin.IsEnabled = false;
             txtPasswordLogin.IsEnabled = false;
 
-            await Task.Delay(1500);
+            var usuario = await Task.Run(() => UsuarioRepository.AutenticarUsuario(carne, password));
 
-            bool isSuccess = true;
+            LoadingOverlay.Visibility = Visibility.Collapsed;
+            btnLogin.IsEnabled = true;
+            txtCarneLogin.IsEnabled = true;
+            txtPasswordLogin.IsEnabled = true;
 
-            if (isSuccess)
+            if (usuario != null)
             {
                 ErrorPanel.Visibility = Visibility.Collapsed;
-                
-                MainWindow mainWindow = new MainWindow();
+
+                var mainWindow = new MainWindow(usuario);
                 mainWindow.Show();
                 this.Close();
             }
             else
             {
                 ErrorPanel.Visibility = Visibility.Visible;
+                ((TextBlock)ErrorPanel.FindName("ErrorTitle")).Text = "Carné o contraseña incorrectos";
+                ((TextBlock)ErrorPanel.FindName("ErrorDetail")).Text = "Verifica tus credenciales e intenta nuevamente";
             }
-
-            LoadingOverlay.Visibility = Visibility.Collapsed;
-            btnLogin.IsEnabled = true;
-            txtCarneLogin.IsEnabled = true;
-            txtPasswordLogin.IsEnabled = true;
         }
 
         private void BtnIrRegistro_Click(object sender, RoutedEventArgs e)
         {
-            // Ocultar panel de login y mostrar el de registro
             LoginPanel.Visibility = Visibility.Collapsed;
             RegisterPanel.Visibility = Visibility.Visible;
             ErrorPanel.Visibility = Visibility.Collapsed;
-            
-            // Limpiar campos de login
+
             txtCarneLogin.Clear();
             txtPasswordLogin.Clear();
         }
 
-        private void BtnRegistrar_Click(object sender, RoutedEventArgs e)
+        private async void BtnRegistrar_Click(object sender, RoutedEventArgs e)
         {
-            string carne = txtCarneReg.Text;
-            string nombre = txtNombreReg.Text;
+            string carne = txtCarneReg.Text.Trim();
+            string nombre = txtNombreReg.Text.Trim();
             string password = txtPasswordReg.Password;
             string confirmPassword = txtConfirmPasswordReg.Password;
-
-            if (password != confirmPassword)
-            {
-                MessageBox.Show("Las contraseñas no coinciden. Por favor verifique.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
 
             if (string.IsNullOrWhiteSpace(carne) || string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(password))
             {
@@ -74,16 +75,37 @@ namespace ProyectoPED.Views
                 return;
             }
 
-            // TODO: Agregar lógica de registro en base de datos MySQL aquí
-            // 1. Conectar con la base de datos
-            // 2. Verificar que el carné no exista ya
-            // 3. Hashear la contraseña
-            // 4. Insertar nuevo usuario en la tabla
-            
-            MessageBox.Show("Cuenta creada exitosamente. Puede iniciar sesión.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-            
-            // Regresar al inicio de sesión
-            VolverALogin();
+            if (password != confirmPassword)
+            {
+                MessageBox.Show("Las contraseñas no coinciden. Por favor verifique.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (password.Length < 6)
+            {
+                MessageBox.Show("La contraseña debe tener al menos 6 caracteres.", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            bool registrado = await Task.Run(() => UsuarioRepository.RegistrarUsuario(carne, nombre, password));
+
+            if (registrado)
+            {
+                MessageBox.Show("Cuenta creada exitosamente. Puede iniciar sesión.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                VolverALogin();
+            }
+            else
+            {
+                bool existe = await Task.Run(() => UsuarioRepository.ExisteUsuario(carne));
+                if (existe)
+                {
+                    MessageBox.Show("El carné ingresado ya está registrado.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    MessageBox.Show("Ocurrió un error al crear la cuenta. Intente nuevamente.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
         private void BtnCancelarRegistro_Click(object sender, RoutedEventArgs e)
@@ -95,8 +117,7 @@ namespace ProyectoPED.Views
         {
             RegisterPanel.Visibility = Visibility.Collapsed;
             LoginPanel.Visibility = Visibility.Visible;
-            
-            // Limpiar campos de registro
+
             txtCarneReg.Clear();
             txtNombreReg.Clear();
             txtPasswordReg.Clear();
