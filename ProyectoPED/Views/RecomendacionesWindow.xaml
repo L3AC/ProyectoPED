@@ -5,59 +5,88 @@
         WindowStartupLocation="CenterScreen"
         Background="#F3F4F6">
     
-    <Grid>
-        <StackPanel Margin="20">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Título -->
+        <TextBlock Grid.Row="0"
+                   Text="Análisis y Recomendaciones" 
+                   FontSize="24" 
+                   FontWeight="Bold" 
+                   Foreground="#1F2937"
+                   Margin="0,0,0,15"/>
+        
+        <!-- Pestaña de contenido -->
+        <TabControl Grid.Row="1"
+                    Background="White" BorderBrush="#E5E7EB" Foreground="#1F2937" Margin="0,0,0,15">
             
-            <!-- Título -->
-            <TextBlock Text="Análisis y Recomendaciones" 
-                       FontSize="24" 
-                       FontWeight="Bold" 
-                       Foreground="#1F2937"
-                       Margin="0,0,0,15"/>
+            <!-- Pestaña 1: Recomendaciones -->
+            <TabItem Header="Recomendaciones" Foreground="#1F2937">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="PnlRecomendaciones" Margin="15"/>
+                </ScrollViewer>
+            </TabItem>
             
-            <!-- Pestaña de contenido -->
-            <TabControl Background="White" BorderBrush="#E5E7EB" Foreground="#1F2937" Margin="0,0,0,15">
-                
-                <!-- Pestaña 1: Recomendaciones -->
-                <TabItem Header="Recomendaciones" Foreground="#1F2937">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <StackPanel x:Name="PnlRecomendaciones" Margin="15"/>
-                    </ScrollViewer>
-                </TabItem>
-                
-                <!-- Pestaña 2: Estadísticas -->
-                <TabItem Header="Estadísticas" Foreground="#1F2937">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <StackPanel x:Name="PnlEstadisticas" Margin="15"/>
-                    </ScrollViewer>
-                </TabItem>
-                
-                <!-- Pestaña 3: Cuellos de Botella -->
-                <TabItem Header="Cuellos de Botella" Foreground="#1F2937">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <StackPanel x:Name="PnlCuellos" Margin="15"/>
-                    </ScrollViewer>
-                </TabItem>
-                
-                <!-- Pestaña 4: Carga Diaria -->
-                <TabItem Header="Carga de Trabajo" Foreground="#1F2937">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <StackPanel x:Name="PnlCargaTrabajo" Margin="15"/>
-                    </ScrollViewer>
-                </TabItem>
-                
-            </TabControl>
+            <!-- Pestaña 2: Estadísticas -->
+            <TabItem Header="Estadísticas" Foreground="#1F2937">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="PnlEstadisticas" Margin="15"/>
+                </ScrollViewer>
+            </TabItem>
             
-            <!-- Botón Cerrar -->
-            <Button Content="Cerrar" 
-                    Click="BtnCerrar_Click"
-                    Background="#8B5CF6" 
-                    Foreground="White" 
-                    Padding="16,10" 
-                    FontWeight="SemiBold"
-                    Width="150"
-                    HorizontalAlignment="Center"/>
+            <!-- Pestaña 3: Cuellos de Botella -->
+            <TabItem Header="Cuellos de Botella" Foreground="#1F2937">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="PnlCuellos" Margin="15"/>
+                </ScrollViewer>
+            </TabItem>
             
-        </StackPanel>
+            <!-- Pestaña 4: Carga Diaria -->
+            <TabItem Header="Carga de Trabajo" Foreground="#1F2937">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="PnlCargaTrabajo" Margin="15"/>
+                </ScrollViewer>
+            </TabItem>
+            
+        </TabControl>
+        
+        <!-- Botón Cerrar -->
+        <Button Grid.Row="2"
+                Content="Cerrar" 
+                Click="BtnCerrar_Click"
+                Background="#8B5CF6" 
+                Foreground="White" 
+                FontWeight="SemiBold"
+                Width="150"
+                Height="40"
+                Cursor="Hand"
+                HorizontalAlignment="Center">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                        CornerRadius="6">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="border" Property="Background" Value="#7C3AED"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="border" Property="Background" Value="#6D28D9"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
     </Grid>
 </Window>
