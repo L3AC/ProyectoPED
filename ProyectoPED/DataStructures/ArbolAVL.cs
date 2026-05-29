@@ -4,9 +4,7 @@ using System.Collections.Generic;
 
 namespace ProyectoPED.DataStructures
 {
-    /// <summary>
     /// Nodo del Árbol AVL
-    /// </summary>
     public class NodoAVL
     {
         public Tarea Tarea { get; set; } = null!;
@@ -39,9 +37,7 @@ namespace ProyectoPED.DataStructures
         }
     }
 
-    /// <summary>
     /// Árbol AVL para mantener tareas ordenadas por urgencia (días restantes)
-    /// </summary>
     public class ArbolAVL
     {
         private NodoAVL? raiz;
@@ -51,10 +47,8 @@ namespace ProyectoPED.DataStructures
             raiz = null;
         }
 
-        /// <summary>
         /// Inserta una tarea en el árbol
         /// Ordenamiento: por días restantes (negativo, para que los más urgentes estén al inicio)
-        /// </summary>
         public void Insertar(Tarea tarea)
         {
             raiz = InsertarRecursivo(raiz, tarea);
@@ -100,9 +94,7 @@ namespace ProyectoPED.DataStructures
             return Balancear(nodo);
         }
 
-        /// <summary>
         /// Elimina una tarea del árbol por su ID
-        /// </summary>
         public void Eliminar(int tareaId)
         {
             raiz = EliminarRecursivoPorId(raiz, tareaId);
@@ -139,9 +131,7 @@ namespace ProyectoPED.DataStructures
             return Balancear(nodo);
         }
 
-        /// <summary>
         /// Busca una tarea por ID (recorrido completo)
-        /// </summary>
         public Tarea? Buscar(int tareaId)
         {
             return BuscarRecursivo(raiz, tareaId);
@@ -162,9 +152,7 @@ namespace ProyectoPED.DataStructures
             return BuscarRecursivo(nodo.Derecha, tareaId);
         }
 
-        /// <summary>
         /// Obtiene el recorrido InOrder (tareas ordenadas por urgencia)
-        /// </summary>
         public List<Tarea> ObtenerRecorridoInOrder()
         {
             var resultado = new List<Tarea>();
@@ -182,9 +170,7 @@ namespace ProyectoPED.DataStructures
             RecorridoInOrder(nodo.Derecha, resultado);
         }
 
-        /// <summary>
         /// Obtiene el recorrido PreOrder (para visualización jerárquica)
-        /// </summary>
         public List<Tarea> ObtenerRecorridoPreOrder()
         {
             var resultado = new List<Tarea>();
@@ -202,9 +188,7 @@ namespace ProyectoPED.DataStructures
             RecorridoPreOrder(nodo.Derecha, resultado);
         }
 
-        /// <summary>
         /// Obtiene información jerárquica del árbol para visualización
-        /// </summary>
         public List<NodoInfoArbol> ObtenerInfoArbolVisual()
         {
             var resultado = new List<NodoInfoArbol>();
@@ -242,9 +226,7 @@ namespace ProyectoPED.DataStructures
             }
         }
 
-        /// <summary>
         /// Reconstruye el árbol (útil después de cambios masivos)
-        /// </summary>
         public void Reconstruir(List<Tarea> tareas)
         {
             raiz = null;
@@ -254,17 +236,13 @@ namespace ProyectoPED.DataStructures
             }
         }
 
-        /// <summary>
         /// Limpia el árbol
-        /// </summary>
         public void Limpiar()
         {
             raiz = null;
         }
 
-        /// <summary>
         /// Obtiene la cantidad de nodos
-        /// </summary>
         public int ObtenerCantidadNodos()
         {
             return ContarNodos(raiz);
@@ -277,17 +255,13 @@ namespace ProyectoPED.DataStructures
             return 1 + ContarNodos(nodo.Izquierda) + ContarNodos(nodo.Derecha);
         }
 
-        /// <summary>
         /// Obtiene la altura del árbol
-        /// </summary>
         public int ObtenerAltura()
         {
             return raiz?.Altura ?? 0;
         }
 
-        /// <summary>
         /// Realiza rotación a la derecha
-        /// </summary>
         private NodoAVL RotarDerecha(NodoAVL nodo)
         {
             var nuevoRaiz = nodo.Izquierda!;
@@ -300,9 +274,7 @@ namespace ProyectoPED.DataStructures
             return nuevoRaiz;
         }
 
-        /// <summary>
         /// Realiza rotación a la izquierda
-        /// </summary>
         private NodoAVL RotarIzquierda(NodoAVL nodo)
         {
             var nuevoRaiz = nodo.Derecha!;
@@ -315,9 +287,7 @@ namespace ProyectoPED.DataStructures
             return nuevoRaiz;
         }
 
-        /// <summary>
         /// Balancea el árbol después de inserciones o eliminaciones
-        /// </summary>
         private NodoAVL Balancear(NodoAVL nodo)
         {
             int factorBalance = nodo.ObtenerFactorBalance();
@@ -361,9 +331,7 @@ namespace ProyectoPED.DataStructures
         }
     }
 
-    /// <summary>
     /// Información de un nodo para visualización
-    /// </summary>
     public class NodoInfoArbol
     {
         public int TareaId { get; set; }

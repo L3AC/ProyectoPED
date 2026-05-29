@@ -4,9 +4,7 @@ using System.Collections.Generic;
 
 namespace ProyectoPED.Services
 {
-    /// <summary>
     /// Resultado de la simulación de un día/período
-    /// </summary>
     public class SimulationResult
     {
         public DateTime FechaSimulacion { get; set; }
@@ -17,9 +15,7 @@ namespace ProyectoPED.Services
         public int TareasPendientes { get; set; }
     }
 
-    /// <summary>
     /// Alerta sobre una tarea
-    /// </summary>
     public class TareaAlerta
     {
         public int TareaId { get; set; }
@@ -30,9 +26,7 @@ namespace ProyectoPED.Services
         public string Severidad { get; set; } = "";
     }
 
-    /// <summary>
     /// Proyección de tareas
-    /// </summary>
     public class ProyeccionTareas
     {
         public DateTime FechaInicio { get; set; }
@@ -42,9 +36,7 @@ namespace ProyectoPED.Services
         public Dictionary<int, List<Tarea>> TareasPorSemana { get; set; } = new();
     }
 
-    /// <summary>
     /// Información sobre cuello de botella
-    /// </summary>
     public class CuellodeBottella
     {
         public DateTime Fecha { get; set; }

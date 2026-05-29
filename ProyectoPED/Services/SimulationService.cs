@@ -17,42 +17,32 @@ namespace ProyectoPED.Services
             this.fechaActual = DateTime.Today;
         }
 
-        /// <summary>
         /// Obtiene la fecha actual de la simulación
-        /// </summary>
         public DateTime ObtenerFechaActual()
         {
             return fechaActual;
         }
 
-        /// <summary>
         /// Establece la fecha actual de la simulación
-        /// </summary>
         public void EstablecerFechaActual(DateTime fecha)
         {
             fechaActual = fecha.Date;
         }
 
-        /// <summary>
         /// Reinicia la simulación a la fecha actual del sistema
-        /// </summary>
         public void ReiniciarSimulacion()
         {
             fechaActual = DateTime.Today;
         }
 
-        /// <summary>
         /// Simula el avance de un día
-        /// </summary>
         public SimulationResult SimularUnDia()
         {
             fechaActual = fechaActual.AddDays(1);
             return ObtenerResultadoSimulacion();
         }
 
-        /// <summary>
         /// Simula el avance de múltiples días
-        /// </summary>
         public SimulationResult SimularDias(int cantidad)
         {
             if (cantidad < 1)
@@ -62,9 +52,7 @@ namespace ProyectoPED.Services
             return ObtenerResultadoSimulacion();
         }
 
-        /// <summary>
         /// Simula hasta una fecha específica
-        /// </summary>
         public SimulationResult SimularHastaFecha(DateTime fecha)
         {
             if (fecha <= fechaActual)
@@ -74,9 +62,7 @@ namespace ProyectoPED.Services
             return ObtenerResultadoSimulacion();
         }
 
-        /// <summary>
         /// Obtiene el resultado de la simulación actual
-        /// </summary>
         private SimulationResult ObtenerResultadoSimulacion()
         {
             var tareas = tareaService.ObtenerTareasOrdenadas();
@@ -134,9 +120,7 @@ namespace ProyectoPED.Services
             return resultado;
         }
 
-        /// <summary>
         /// Obtiene una proyección de tareas hasta una fecha específica
-        /// </summary>
         public ProyeccionTareas ObtenerProyeccion(DateTime fechaHasta)
         {
             var tareas = tareaService.ObtenerTareasOrdenadas();
@@ -171,9 +155,7 @@ namespace ProyectoPED.Services
             return proyeccion;
         }
 
-        /// <summary>
         /// Identifica cuellos de botella (picos de carga)
-        /// </summary>
         public List<CuellodeBottella> IdentificarCuellosdeBottella()
         {
             var tareas = tareaService.ObtenerTareasOrdenadas();
@@ -221,9 +203,7 @@ namespace ProyectoPED.Services
             return cuellos.OrderBy(x => x.Fecha).ToList();
         }
 
-        /// <summary>
         /// Obtiene recomendaciones basadas en la simulación
-        /// </summary>
         public List<string> ObtenerRecomendaciones()
         {
             var recomendaciones = new List<string>();

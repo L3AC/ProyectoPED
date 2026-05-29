@@ -8,9 +8,7 @@ namespace ProyectoPED.Repositories
 {
     public class UsuarioRepository
     {
-        /// <summary>
         /// Autentica un usuario con su carné y contraseña
-        /// </summary>
         public static Usuario? AutenticarUsuario(string carne, string password)
         {
             try
@@ -49,9 +47,7 @@ namespace ProyectoPED.Repositories
             }
         }
 
-        /// <summary>
         /// Obtiene un usuario por su ID
-        /// </summary>
         public static Usuario? ObtenerUsuarioPorId(int usuarioId)
         {
             try
@@ -84,9 +80,7 @@ namespace ProyectoPED.Repositories
             }
         }
 
-        /// <summary>
         /// Registra un nuevo usuario
-        /// </summary>
         public static bool RegistrarUsuario(string carne, string nombre, string password)
         {
             try
@@ -115,9 +109,7 @@ namespace ProyectoPED.Repositories
             }
         }
 
-        /// <summary>
         /// Verifica si un usuario con ese carné ya existe
-        /// </summary>
         public static bool ExisteUsuario(string carne)
         {
             try
@@ -139,9 +131,7 @@ namespace ProyectoPED.Repositories
             }
         }
 
-        /// <summary>
         /// Hashea una contraseña usando SHA256
-        /// </summary>
         public static string HashearContraseña(string password)
         {
             using (var sha256 = SHA256.Create())
@@ -151,18 +141,14 @@ namespace ProyectoPED.Repositories
             }
         }
 
-        /// <summary>
         /// Verifica si una contraseña coincide con su hash
-        /// </summary>
         private static bool VerificarContraseña(string password, string hash)
         {
             var hashDelPassword = HashearContraseña(password);
             return hashDelPassword == hash;
         }
 
-        /// <summary>
         /// Actualiza la contraseña de un usuario
-        /// </summary>
         public static bool ActualizarPassword(int usuarioId, string nuevaPassword)
         {
             try

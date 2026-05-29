@@ -14,9 +14,7 @@ namespace ProyectoPED.Services
             this.tareaService = tareaService;
         }
 
-        /// <summary>
         /// Obtiene estadísticas de tareas por prioridad
-        /// </summary>
         public Dictionary<string, int> ObtenerEstadisticasPorPrioridad()
         {
             var tareas = tareaService.ObtenerTareasOrdenadas();
@@ -28,9 +26,7 @@ namespace ProyectoPED.Services
             };
         }
 
-        /// <summary>
         /// Obtiene estadísticas de tareas por estado
-        /// </summary>
         public Dictionary<string, int> ObtenerEstadisticasPorEstado()
         {
             var tareas = tareaService.ObtenerTareasOrdenadas();
@@ -41,9 +37,7 @@ namespace ProyectoPED.Services
             };
         }
 
-        /// <summary>
         /// Obtiene el recuento de tareas por rango de urgencia
-        /// </summary>
         public Dictionary<string, int> ObtenerEstadisticasPorUrgencia()
         {
             var tareas = tareaService.ObtenerTareasOrdenadas();
@@ -56,9 +50,7 @@ namespace ProyectoPED.Services
             };
         }
 
-        /// <summary>
         /// Obtiene el resumen general del sistema
-        /// </summary>
         public ResumenGeneral ObtenerResumenGeneral()
         {
             var tareas = tareaService.ObtenerTareasOrdenadas();
@@ -78,9 +70,7 @@ namespace ProyectoPED.Services
             };
         }
 
-        /// <summary>
         /// Obtiene las tareas vencidas con detalles
-        /// </summary>
         public List<TareaVencida> ObtenerTareasVencidasDetallado()
         {
             var tareasVencidas = tareaService.ObtenerTareasVencidas();
@@ -101,9 +91,7 @@ namespace ProyectoPED.Services
             return resultado.OrderByDescending(t => t.DiasVencidos).ToList();
         }
 
-        /// <summary>
         /// Obtiene tareas próximas a vencer con detalles
-        /// </summary>
         public List<TareaProxima> ObtenerTareasProximasDetallado()
         {
             var tareasProximas = tareaService.ObtenerTareasProximasAVencer();
@@ -125,9 +113,7 @@ namespace ProyectoPED.Services
             return resultado.OrderBy(t => t.DiasRestantes).ToList();
         }
 
-        /// <summary>
         /// Obtiene un resumen por semana
-        /// </summary>
         public Dictionary<string, int> ObtenerResumenPorSemana()
         {
             var tareas = tareaService.ObtenerTareasOrdenadas();
@@ -151,9 +137,7 @@ namespace ProyectoPED.Services
             return resultado;
         }
 
-        /// <summary>
         /// Obtiene promedio de tareas completadas por día
-        /// </summary>
         public double ObtenerPromedioTareasCompletadasPorDia()
         {
             var tareas = tareaService.ObtenerTareasOrdenadas();
@@ -174,9 +158,7 @@ namespace ProyectoPED.Services
             return completadas.Count / diasTranscurridos;
         }
 
-        /// <summary>
         /// Genera reporte de comparativa por mes
-        /// </summary>
         public Dictionary<string, Dictionary<string, int>> ObtenerReporteComparativaMeses()
         {
             var tareas = tareaService.ObtenerTareasOrdenadas();
@@ -205,9 +187,7 @@ namespace ProyectoPED.Services
             return resultado;
         }
 
-        /// <summary>
         /// Calcula la urgencia de una tarea basada en días restantes
-        /// </summary>
         private string CalcularUrgencia(int diasRestantes)
         {
             return diasRestantes switch
@@ -219,9 +199,7 @@ namespace ProyectoPED.Services
             };
         }
 
-        /// <summary>
         /// Obtiene el análisis de carga de trabajo
-        /// </summary>
         public AnálisisCargaTrabajo ObtenerAnálisisCargaTrabajo()
         {
             var tareas = tareaService.ObtenerTareasOrdenadas();
@@ -255,9 +233,7 @@ namespace ProyectoPED.Services
         }
     }
 
-    /// <summary>
     /// Resumen general de tareas
-    /// </summary>
     public class ResumenGeneral
     {
         public int TotalTareas { get; set; }
@@ -269,9 +245,7 @@ namespace ProyectoPED.Services
         public DateTime FechaActualizacion { get; set; }
     }
 
-    /// <summary>
     /// Información de tarea vencida
-    /// </summary>
     public class TareaVencida
     {
         public int Id { get; set; }
@@ -281,9 +255,7 @@ namespace ProyectoPED.Services
         public string Prioridad { get; set; } = "";
     }
 
-    /// <summary>
     /// Información de tarea próxima a vencer
-    /// </summary>
     public class TareaProxima
     {
         public int Id { get; set; }
@@ -294,9 +266,7 @@ namespace ProyectoPED.Services
         public string Urgencia { get; set; } = "";
     }
 
-    /// <summary>
     /// Análisis de carga de trabajo
-    /// </summary>
     public class AnálisisCargaTrabajo
     {
         public double CargaPromedioDiaria { get; set; }
