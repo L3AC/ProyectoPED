@@ -69,18 +69,15 @@ namespace ProyectoPED.Services
                 CreatedAt = DateTime.Now
             };
 
-            if (TareaRepository.InsertarTarea(tarea))
+            var idGenerado = TareaRepository.InsertarTareaYObtenerId(tarea);
+            if (idGenerado.HasValue)
             {
-                var tareaDelBD = TareaRepository.GetTareasPorUsuario(usuarioId).LastOrDefault();
-                if (tareaDelBD != null)
-                {
-                    tarea.Id = tareaDelBD.Id;
-                    tareas.Add(tarea);
-                    arbolAVL.Insertar(tarea);
-                    pilaDeshacer.Agregar(tarea, "Crear");
+                tarea.Id = idGenerado.Value;
+                tareas.Add(tarea);
+                arbolAVL.Insertar(tarea);
+                pilaDeshacer.Agregar(tarea, "Crear");
 
-                    return true;
-                }
+                return true;
             }
 
             return false;

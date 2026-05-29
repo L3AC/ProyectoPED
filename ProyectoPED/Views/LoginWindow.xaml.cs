@@ -6,6 +6,8 @@ namespace ProyectoPED.Views
 {
     public partial class LoginWindow : Window
     {
+        public bool LoginExitoso { get; private set; } = false;
+
         public LoginWindow()
         {
             InitializeComponent();
@@ -39,6 +41,7 @@ namespace ProyectoPED.Views
             if (usuario != null)
             {
                 ErrorPanel.Visibility = Visibility.Collapsed;
+                LoginExitoso = true;
 
                 var mainWindow = new MainWindow(usuario);
                 mainWindow.Show();

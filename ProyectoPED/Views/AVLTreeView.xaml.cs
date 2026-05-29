@@ -220,25 +220,30 @@ namespace ProyectoPED.Views
             };
             infoRow.Children.Add(diasBadge);
 
-            if (nodo.Prioridad == "Alta")
+            string prioridadBg = nodo.Prioridad switch
             {
-                var prioridadBadge = new Border
-                {
-                    Background = new SolidColorBrush(Color.FromRgb(239, 68, 68)),
-                    CornerRadius = new CornerRadius(4),
-                    Padding = new Thickness(6, 2, 6, 2),
-                    Margin = new Thickness(4, 0, 0, 0)
-                };
-                prioridadBadge.Child = new TextBlock
-                {
-                    Text = "ALTA",
-                    FontSize = 9,
-                    FontWeight = FontWeights.Bold,
-                    Foreground = Brushes.White,
-                    TextAlignment = TextAlignment.Center
-                };
-                infoRow.Children.Add(prioridadBadge);
-            }
+                "Alta" => "#DC2626",
+                "Media" => "#F97316",
+                "Baja" => "#22C55E",
+                _ => "#6B7280"
+            };
+
+            var prioridadBadge = new Border
+            {
+                Background = (Brush)converter.ConvertFromString(prioridadBg)!,
+                CornerRadius = new CornerRadius(4),
+                Padding = new Thickness(6, 2, 6, 2),
+                Margin = new Thickness(4, 0, 0, 0)
+            };
+            prioridadBadge.Child = new TextBlock
+            {
+                Text = nodo.Prioridad.ToUpper(),
+                FontSize = 9,
+                FontWeight = FontWeights.Bold,
+                Foreground = Brushes.White,
+                TextAlignment = TextAlignment.Center
+            };
+            infoRow.Children.Add(prioridadBadge);
 
             stack.Children.Add(infoRow);
 

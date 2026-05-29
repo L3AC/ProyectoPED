@@ -161,19 +161,66 @@ namespace ProyectoPED.Repositories
             }
         }
 
-        public static bool EliminarTarea(int tareaId)
+        public static int? InsertarTareaYObtenerId(Tarea tarea)
         {
             try
             {
                 using var connection = DatabaseConnection.GetConnection();
                 connection.Open();
 
-                string query = "DELETE FROM tareas WHERE id = @id";
+                string query = @"INSERT INTO tareas (usuario_id, titulo, descripcion, fecha_limite, prioridad, estado) 
+                                 VALUES (@usuarioId, @titulo, @descripcion, @fechaLimite, @prioridad, @estado);
+                                 SELECT LAST_INSERT_ID();";
 
                 using var command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@id", tareaId);
+                command.Parameters.AddWithValue("@usuarioId", tarea.UsuarioId);
+                command.Parameters.AddWithValue("@titulo", tarea.Titulo);
+                command.Parameters.AddWithValue("@descripcion", tarea.Descripcion ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@fechaLimite", tarea.FechaLimite);
+                command.Parameters.AddWithValue("@prioridad", tarea.Prioridad);
+                command.Parameters.AddWithValue("@estado", tarea.Estado.ToString());
 
-                return command.ExecuteNonQuery() > 0;
+                var result = command.ExecuteScalar();
+                if (result != null)
+                {
+                    return Convert.ToInt32(result);
+                }
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public static bool EliminarTarea(int tareaId)
+        {
+            try
+            {
+                using var connection = DatabaseConnection.GetConnection();
+                connection.Open();
+                using var transaction = connection.BeginTransaction();
+
+                using (var cmd = new MySqlCommand("DELETE FROM dependencias WHERE tarea_id = @id OR depende_de = @id", connection, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@id", tareaId);
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new MySqlCommand("DELETE FROM subtareas WHERE tarea_id = @id", connection, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@id", tareaId);
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new MySqlCommand("DELETE FROM tareas WHERE id = @id", connection, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@id", tareaId);
+                    var filas = cmd.ExecuteNonQuery();
+
+                    transaction.Commit();
+                    return filas > 0;
+                }
             }
             catch
             {

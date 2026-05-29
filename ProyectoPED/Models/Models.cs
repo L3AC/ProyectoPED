@@ -22,6 +22,7 @@ namespace ProyectoPED.Models
         public DateTime CreatedAt { get; set; }
 
         public int DiasRestantes => (FechaLimite.Date - DateTime.Today).Days;
+        
         public string DiasRestantesTexto => DiasRestantes switch
         {
             > 0 => $"{DiasRestantes} días",

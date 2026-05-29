@@ -244,10 +244,13 @@ namespace ProyectoPED.Views
                 
                 if (mainWindow != null)
                 {
-                    var app = Application.Current;
                     mainWindow.Hide();
                     loginWindow.Show();
-                    loginWindow.Closed += (s, args) => app.Shutdown();
+                    loginWindow.Closed += (s, args) =>
+                    {
+                        if (!loginWindow.LoginExitoso)
+                            Application.Current.Shutdown();
+                    };
                 }
             }
         }
@@ -349,7 +352,12 @@ namespace ProyectoPED.Views
                     }
                     else
                     {
-                        MessageBox.Show("No se pudo eliminar la tarea", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        var tareaError = listaTareas.FirstOrDefault(t => t.Id == tareaId);
+                        var tituloError = tareaError?.Titulo ?? "(desconocida)";
+                        MessageBox.Show($"No se pudo eliminar: ID {tareaId} - \"{tituloError}\"\n" +
+                            "Posible causa: el ID no existe en la base de datos.\n" +
+                            "Reinicia la aplicación para recargar los IDs correctos.",
+                            "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
